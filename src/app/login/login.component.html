@@ -1,0 +1,63 @@
+<div class="login">
+  <div class="form-box form-box--login">
+    <form class="form-box__inner form-box__inner--login" [formGroup]="loginForm" (ngSubmit)="login()">
+      <h5 class="text text--primary fw--medium mb-5">
+        Login to your account
+      </h5>
+      <div class="form-group form-group--email mb-5">
+        <label for="inputEmail"> Email </label>
+        <input
+          type="text"
+          class="form-control"
+          id="inputEmail"
+          placeholder="Enter your email"
+          formControlName="email"
+          minlength="5" maxlength="50"
+        />
+        <div class="input-helper" [ngClass]="lf.email.touched && lf.email.errors ? 'show' : ''">
+          <p class="input-helper__text text text--danger" [ngClass]="lf.email.errors?.required ? 'show' : ''">
+            Email is required
+            </p>
+          <p class="input-helper__text text text--danger" [ngClass]="lf.email.errors?.email ? 'show' : ''">
+            Email is invalid
+            </p>
+            <p class="input-helper__text text text--danger" [ngClass]="lf.email.errors?.minlength ? 'show' : ''">
+              Email is required to be at least 5 characters
+          </p>
+          <p class="input-helper__text text text--danger" [ngClass]="lf.email.errors?.maxlength ? 'show' : ''">
+            Email cannot be longer than 50 characters
+          </p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputPassword"> Password </label>
+        <div class="password-group">
+          <input
+            [type]="commonUtilService.isShowEntity['password'] ? 'text' : 'password'"
+            class="form-control form-control--password"
+            id="inputPassword"
+            placeholder="Enter password"
+            formControlName="password"
+            minlength="5"
+            maxlength="250"
+          />
+          <span class="password-eye" (click)="commonUtilService.toggle('password')" [ngClass]="commonUtilService.isShowEntity['password'] ? 'password-eye--hide' : ''"></span>
+        </div>
+        <div class="input-helper" [ngClass]="lf.password.touched && lf.password.errors ? 'show' : ''">
+          <p class="input-helper__text text text--danger" [ngClass]="lf.password.errors?.required ? 'show' : ''">
+                Password is required
+            </p>
+            <p class="input-helper__text text text--danger" [ngClass]="lf.password.errors?.minlength ? 'show' : ''">
+              Password is required to be at least 5 characters
+          </p>
+          <p class="input-helper__text text text--danger" [ngClass]="lf.password.errors?.maxlength ? 'show' : ''">
+            Password cannot be longer than 250 characters
+          </p>
+        </div>
+      </div>
+      <button class="btn btn--first text text--primary flex flex--center fw--medium mt-5 w-100" [disabled]="loginForm.invalid || islogging">
+        {{ islogging ? 'Loggin...' : 'Login' }}
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+.users {
+  padding: 8rem 5rem;
+}
+
+// styling for table
+
+.table {
+  border: 1px solid var(--clr-border--light);
+  border-radius: 10px;
+  margin-bottom: 12rem;
+
+  td {
+    height: 7rem;
+    padding: 2rem 3rem;
+    vertical-align: middle;
+  }
+
+  th,
+  tr > *:last-child {
+    padding: 2rem 3rem;
+  }
+
+  tr {
+    cursor: pointer;
+    transition: all .3s;
+
+    &.slide-right {
+      transform: translateX(100%);
+    }
+  }
+
+  tr > *:last-child {
+    & > *:first-child {
+      margin-right: 1.5rem;
+    }
+  }
+
+}

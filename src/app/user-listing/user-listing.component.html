@@ -1,0 +1,96 @@
+
+<div class="users">
+  <div class="flex section-header">
+    <h4 class="heading heading--four fw--medium">Users</h4>
+    <a class="btn btn--first text text--primary flex flex--center fw--medium" (click)="commonUtilService.toggle('add-user')">
+      Add User
+    </a>
+  </div>
+  <ng-container *ngIf="commonUtilService.isLoadingEntity['users']; else showUsers">
+    <div class="spinner-border" role="status"></div>
+  </ng-container>
+  <ng-template #showUsers>
+    <table class="table users__table">
+      <thead>
+        <tr>
+          <th class="text text--primary fw--medium" *ngFor="let userTableHeader of userTableHeaders">
+            {{ userTableHeader }}
+          </th>
+        </tr>
+      </thead>
+      <tbody cdkDropList (cdkDropListDropped)="swipeToDelete($event)">
+        <tr *ngFor="let user of users; let userIndex = index" [cdkDragData]="user" cdkDrag cdkDragLockAxis="x"
+        >
+          <td class="text text--primary">
+            {{ user?.id }}
+          </td>
+          <td class="text text--primary">
+            {{ user?.email }}
+          </td>
+          <td class="text text--primary">
+            {{ user?.first_name }}
+          </td>
+          <td class="text text--primary">
+            {{ user?.last_name }}
+          </td>
+          <td>
+            <img class="img img--avatar" [src]="user?.avatar" [alt]="user?.first_name">
+          </td>
+          <td>
+            <button class="btn btn--second btn--danger text text--primary flex flex--center fw--medium" (click)="deleteUser(user?.id, userIndex)">
+              {{ isDeletingUser[userIndex] ? 'Deleting...' : 'Delete' }}
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-template>
+</div>
+
+<div class="dialog dialog--create-user" [ngClass]="commonUtilService.isShowEntity['add-user'] ? 'pe-auto' : ''">
+  <div class="dialog__wrapper dialog__wrapper--create-user dialog__create-user" [ngClass]="commonUtilService.isShowEntity['add-user'] ? 'dialog__wrapper--active' : ''">
+    <img src="../../assets/ic_close-dialog.svg" alt="close-icon" class="img--close-dialog" (click)="commonUtilService.toggle('add-user')">
+    <h4 class="heading heading--four fw--medium dialog__heading mb-5">
+      Add New User
+    </h4>
+    <div class="dialog__body">
+      <div class="form-box form-box--add-user">
+        <form class="form-box__inner form-box__inner--add-user" [formGroup]="addUserForm" (ngSubmit)="addUser()">
+          <div class="form-group mb-5">
+            <label for="inputName"> Name </label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputName"
+              placeholder="Enter User Name"
+              formControlName="name"
+            />
+            <div class="input-helper" [ngClass]="auf.name.touched && auf.name.errors ? 'show' : ''">
+              <p class="input-helper__text text text--danger" [ngClass]="auf.name.errors?.required ? 'show' : ''">
+                Name is required
+                </p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputJob"> Job </label>
+            <input
+              class="form-control"
+              id="inputJob"
+              placeholder="Enter user job"
+              formControlName="job"
+            />
+            <div class="input-helper" [ngClass]="auf.job.touched && auf.job.errors ? 'show' : ''">
+              <p class="input-helper__text text text--danger" [ngClass]="auf.job.errors?.required ? 'show' : ''">
+                Job is required
+                </p>
+            </div>
+          </div>
+          <button class="btn btn--first text text--primary flex flex--center fw--medium mt-5 w-100" [disabled]="addUserForm.invalid || isAddingUser">
+            {{ isAddingUser ? 'Adding...' : 'Add User' }}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

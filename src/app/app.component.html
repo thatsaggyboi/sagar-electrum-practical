@@ -1,0 +1,19 @@
+<div class="overlay" [ngClass]="commonUtilService.isShowEntity['add-user'] ? 'overlay--active' : ''"></div>
+<div class="wrapper">
+  <aside class="aside" *ngIf="commonUtilService.isAuthenticated">
+    <div class="aside__upper">
+      <a href="#" class="logo heading heading--two">
+        Electrum
+      </a>
+      <span class="text text--third">
+        Hello {{ commonUtilService.username }}
+      </span>
+    </div>
+    <a class="btn btn--first text text--primary flex flex--center fw--medium w-100" (click)="logout()">
+      Logout
+    </a>
+  </aside>
+  <main class="main">
+    <router-outlet></router-outlet>
+  </main>
+</div>
